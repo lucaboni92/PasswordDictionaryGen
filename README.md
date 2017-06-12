@@ -3,10 +3,10 @@ PasswordDictionaryGen is a smart Python script with the aim of generate a dictio
 
 Genereting a passowrd dictionary
 ========
-Input/Output from console:
+Console Input/Output:
 
     python pwd_dictionary_gen.py
     
-Input/Output from file:
+File Input/Output:
 
     python pwd_dictionary_gen.py -i <inputfile> -o <outputfile>
