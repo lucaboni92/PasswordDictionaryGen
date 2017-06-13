@@ -1,5 +1,6 @@
 from random import randint
 import sys
+import os
 
 MAX_PWD_LEN = 30
 
@@ -16,7 +17,6 @@ def main():
         if len(sys.argv) > 1:
             i = 1
             while i < len(sys.argv):
-            #for i in range(1,len(sys.argv)-1, 2):
                 if sys.argv[i] == '-i' or sys.argv[i] == '--input':
                     # input from file
                     i = i+1
@@ -38,7 +38,7 @@ def main():
                     
                 elif sys.argv[i] == '-h' or sys.argv[i] == '--help':
                     _printHelp()
-                    quit()
+                    os._exit(1)
                     
                 else:
                     print ("Parameters error")
