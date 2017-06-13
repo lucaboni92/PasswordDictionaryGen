@@ -4,41 +4,56 @@ import sys
 MAX_PWD_LEN = 30
 
 def main():
-    #inputfile_name = ""
-    #outputfile_name = ""
 
     defaultMaxIterations = 10000
     defaultGeneratedResults = 50
 
     inputEnable = False
     outputEnable = True
+    customIterationNumber = False
     
     try:
         if len(sys.argv) > 1:
-            for i in range(1,len(sys.argv)-1, 2):
-                if sys.argv[i] == '-i':
+            i = 1
+            while i < len(sys.argv):
+            #for i in range(1,len(sys.argv)-1, 2):
+                if sys.argv[i] == '-i' or sys.argv[i] == '--input':
                     # input from file
-                    inputfile_name = sys.argv[i+1]
+                    i = i+1
+                    inputfile_name = sys.argv[i]
                     inputEnable = True
                     
-                elif sys.argv[i] == '-o':
+                elif sys.argv[i] == '-o' or sys.argv[i] == '--output':
                     # output file
-                    outputfile_name = sys.argv[i+1]
+                    i = i+1
+                    outputfile_name = sys.argv[i]
                     print ("---outputfile_name--->"  + outputfile_name)
                     outputEnable = False
+
+                elif sys.argv[i] == '-n' or sys.argv[i] == '--iterations':
+                    # number of iterations
+                    i = i+1
+                    customIterationNumber = True
+                    generatedResults = int(sys.argv[i])
+                    
+                elif sys.argv[i] == '-h' or sys.argv[i] == '--help':
+                    _printHelp()
+                    quit()
                     
                 else:
                     print ("Parameters error")
                     print ("Quitting...")
                     quit()
+                i = i+1
         
         outputSet = set()
 
-        generatedResults = input("Number of iterations for each word [void to default]: ")
-        if generatedResults != "":
-            generatedResults = int(generatedResults)
-        else:
-            generatedResults = int(defaultGeneratedResults)
+        if customIterationNumber == False:
+            generatedResults = input("Number of iterations for each word [void to default]: ")
+            if generatedResults != "":
+                generatedResults = int(generatedResults)
+            else:
+                generatedResults = int(defaultGeneratedResults)
 
         maxIterations = defaultMaxIterations
         if generatedResults > defaultMaxIterations:
@@ -97,6 +112,15 @@ def main():
         # unexpected exception
         print("Unexpected error:", sys.exc_info()[0])
 
+def _printHelp():
+    print("\nPasswordDictionaryGen:")
+    print("\npython pwd_dictionary_gen.py [options]")
+    print("\t-i\t<inputfile>\tword list from file")
+    print("\t-o\t<outputfile>\toutput dictionary on file")
+    print("\t-n\t<max numeber of results for each word>")
+    print("\t-h\tprint help")
+	
+		
 def _readInputFile(inputfile_name):
     inputSet = set()
     with open(inputfile_name,'r') as f:
